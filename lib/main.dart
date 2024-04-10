@@ -1,5 +1,6 @@
 import 'package:clean_arch_bloc_2/core/res/colours.dart';
 import 'package:clean_arch_bloc_2/core/res/fonts.dart';
+import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
 import 'package:clean_arch_bloc_2/core/services/router.dart';
 
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ import 'package:flutter/material.dart';
 // if want to apply those changes to an already existing code run :
 // ` dart fix --apply `
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
   runApp(const MyApp());
 }
 

@@ -1,8 +1,11 @@
 import 'package:clean_arch_bloc_2/core/common/views/page_under_construction.dart';
+import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
+import 'package:clean_arch_bloc_2/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:clean_arch_bloc_2/src/on_boarding/presentation/views/on_boarding_screen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -11,7 +14,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       // PageRouteBuilder everytime for a new page and have
       // to create custom animation for every page multiple times.
       return _pageBuilder(
-        (_) => const OnBoardingScreen(),
+        (_) => BlocProvider<OnBoardingCubit>(
+          // we are wrapping with BlocProvider in here in the generatedRoute
+          // section
+          create: (_) => sl<OnBoardingCubit>(),
+          child: const OnBoardingScreen(),
+        ),
         settings: settings,
       );
     default:
