@@ -2,6 +2,8 @@ import 'package:clean_arch_bloc_2/core/res/colours.dart';
 import 'package:clean_arch_bloc_2/core/res/fonts.dart';
 import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
 import 'package:clean_arch_bloc_2/core/services/router.dart';
+import 'package:clean_arch_bloc_2/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,9 @@ import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await init();
   runApp(const MyApp());
 }
