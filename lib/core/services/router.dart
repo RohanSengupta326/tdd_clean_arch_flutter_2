@@ -16,7 +16,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _pageBuilder(
         (_) => BlocProvider<OnBoardingCubit>(
           // we are wrapping with BlocProvider in here in the generatedRoute
-          // section
+          // section for particular pages.
+          // but optimal way is to : imagine there are multiple blocProvider we
+          // need to use to wrap multiple pages. So we have to wrap each page
+          // individually with different BlocProviders.
+          // Rather, if we use MultiBlocProvider and wrap the materialApp we
+          // wrap all the pages with the necessary blocProviders.
           create: (_) => sl<OnBoardingCubit>(),
           child: const OnBoardingScreen(),
         ),

@@ -1,6 +1,12 @@
 import 'package:clean_arch_bloc_2/core/res/media_res.dart';
 import 'package:equatable/equatable.dart';
 
+// this entity is not a model that data layer returns and we are saving it
+// inside a type model. cause this time data layer returns nothing.
+
+// so this is just an hardcoded data entity which we are gonna use in
+// presentation layer to show data based on user new or not.
+
 class PageContent extends Equatable {
   const PageContent({
     required this.image,
