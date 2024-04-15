@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:clean_arch_bloc_2/core/enums/update_user.dart';
 import 'package:clean_arch_bloc_2/core/errors/exceptions.dart';
+import 'package:clean_arch_bloc_2/core/usecases/constants.dart';
 import 'package:clean_arch_bloc_2/core/utils/typdefs.dart';
 import 'package:clean_arch_bloc_2/src/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -121,8 +122,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         password: password,
       );
 
+      // changing default data of users to provided details.
       await userCred.user?.updateDisplayName(fullName);
       await userCred.user?.updatePhotoURL(kDefaultAvatar);
+      // updating the photo to a default photo rather keeping it empty.
       await _setUserData(_authClient.currentUser!, email);
     } on FirebaseAuthException catch (e) {
       throw ServerException(
