@@ -180,6 +180,11 @@ void main() {
     );
     dbClient = MockFirebaseStorage();
     mockUser = MockUser()..uid = documentReference.id;
+    // cascade notation '..' : first, a instance of MockUser() is set in the
+    // variable mockUser, then mockUser.uid is accessed like ..uid directly,
+    // then it is set with documentReference.id
+    //
+
     userCredential = MockUserCredential(mockUser);
     dataSource = AuthRemoteDataSourceImpl(
       authClient: authClient,
@@ -187,7 +192,13 @@ void main() {
       dbClient: dbClient,
     );
 
-    // by stubbing here we don't have tof
+    // here stubbing is like : when authClient.currentUser is called
+    // it has to return mockUser.
+    // we are stubbing here , else, when authClient.currentUser will be
+    // called the mock doesn't have currentUser field, we have to manually
+    // create that, then we would have to rearrange the setUps as per their
+    // definition and usage meaning define first then use order.
+    // so by this stub hack we don't have to do any of those.
     when(() => authClient.currentUser).thenReturn(mockUser);
   });
 
@@ -200,6 +211,7 @@ void main() {
     message: 'There is no user record corresponding to this identifier. '
         'The user may have been deleted',
   );
+
   group('forgotPassword', () {
     test(
       'should complete successfully when no [Exception] is thrown',
@@ -210,6 +222,8 @@ void main() {
           ),
         ).thenAnswer((_) async => Future.value());
 
+        // even though its a Future<void> function, we can't expect void cause
+        // else we can't check 'completes' in expect(). if used await.
         final call = dataSource.forgotPassword(tEmail);
 
         expect(call, completes);
@@ -341,6 +355,8 @@ void main() {
           (_) async => Future.value(),
         );
 
+        // even though its a Future<void> function, we can't expect void cause
+        // else we can't check 'completes' in expect(). if used await.
         final call = dataSource.signUp(
           email: tEmail,
           fullName: tFullName,
@@ -356,6 +372,11 @@ void main() {
           ),
         ).called(1);
 
+        // because these awaited calls  ( .updateDisplayNam..) are getting
+        // called inside
+        // signUp function itself, and we are not awaiting the signup func
+        // in expect so these functions won't wait for the answers. so we have
+        // to await them separately using await untilCalled().
         await untilCalled(() => userCredential.user?.updateDisplayName(any()));
         await untilCalled(() => userCredential.user?.updatePhotoURL(any()));
 
@@ -394,6 +415,7 @@ void main() {
             password: tPassword,
           ),
         ).called(1);
+        verifyNoMoreInteractions(authClient);
       },
     );
   });
@@ -415,10 +437,15 @@ void main() {
           userData: tFullName,
         );
 
+        // We are not calling 'expect()' here because we checked already
+        // updateDisplayName and updatePhotoURL previously signUp.
+
         verify(() => mockUser.updateDisplayName(tFullName)).called(1);
 
+        // verifyNever that only updateDisplayName was called , now we are not
+        // testing for other calls.
         verifyNever(() => mockUser.updatePhotoURL(any()));
-        verifyNever(() => mockUser.updateEmail(any()));
+        verifyNever(() => mockUser.verifyBeforeUpdateEmail(any()));
         verifyNever(() => mockUser.updatePassword(any()));
 
         final userData =
