@@ -1,3 +1,4 @@
+import 'package:clean_arch_bloc_2/core/common/app/providers/user_provider.dart';
 import 'package:clean_arch_bloc_2/core/res/colours.dart';
 import 'package:clean_arch_bloc_2/core/res/fonts.dart';
 import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
@@ -6,6 +7,7 @@ import 'package:clean_arch_bloc_2/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // analysiss_options.yaml is providing one of the most important rules to follow
 // for clean code by 'very good ventures' package.
@@ -31,18 +33,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Education App',
-      theme: ThemeData(
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: Fonts.poppins,
-        appBarTheme: const AppBarTheme(
-          color: Colors.transparent,
+    return ChangeNotifierProvider(
+      create: (_) => UserProvider(),
+      child: MaterialApp(
+        title: 'Education App',
+        theme: ThemeData(
+          useMaterial3: true,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          fontFamily: Fonts.poppins,
+          appBarTheme: const AppBarTheme(
+            color: Colors.transparent,
+          ),
+          colorScheme: ColorScheme.fromSwatch(accentColor: Colours.primaryColour),
         ),
-        colorScheme: ColorScheme.fromSwatch(accentColor: Colours.primaryColour),
+        onGenerateRoute: generateRoute,
       ),
-      onGenerateRoute: generateRoute,
     );
   }
 }

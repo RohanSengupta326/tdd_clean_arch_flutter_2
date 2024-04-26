@@ -1,52 +1,22 @@
 import 'package:clean_arch_bloc_2/core/common/views/page_under_construction.dart';
+import 'package:clean_arch_bloc_2/core/extensions/context_extension.dart';
 import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
+import 'package:clean_arch_bloc_2/src/auth/data/models/user_model.dart';
+import 'package:clean_arch_bloc_2/src/auth/presentation/bloc/auth_bloc.dart';
+import 'package:clean_arch_bloc_2/src/auth/presentation/views/sign_in_screen.dart'
+    as ss;
+import 'package:clean_arch_bloc_2/src/auth/presentation/views/sign_up_screen.dart';
+import 'package:clean_arch_bloc_2/src/dashboard/presentation/views/dashboard.dart';
+import 'package:clean_arch_bloc_2/src/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:clean_arch_bloc_2/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:clean_arch_bloc_2/src/on_boarding/presentation/views/on_boarding_screen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-Route<dynamic> generateRoute(RouteSettings settings) {
-  switch (settings.name) {
-    case OnBoardingScreen.routeName:
-      // creating different function cause else we will have to call
-      // PageRouteBuilder everytime for a new page and have
-      // to create custom animation for every page multiple times.
-      return _pageBuilder(
-        (_) => BlocProvider<OnBoardingCubit>(
-          // we are wrapping with BlocProvider in here in the generatedRoute
-          // section for particular pages.
-          // but optimal way is to : imagine there are multiple blocProvider we
-          // need to use to wrap multiple pages. So we have to wrap each page
-          // individually with different BlocProviders.
-          // Rather, if we use MultiBlocProvider and wrap the materialApp we
-          // wrap all the pages with the necessary blocProviders.
-          create: (_) => sl<OnBoardingCubit>(),
-          child: const OnBoardingScreen(),
-        ),
-        settings: settings,
-      );
-    default:
-      return _pageBuilder(
-        (_) => const PageUnderConstruction(),
-        settings: settings,
-      );
-  }
-}
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as fui;
 
-// PageRouteBuilder gives us the option to create custom animation when
-// switching pages.
-PageRouteBuilder<dynamic> _pageBuilder(
-  Widget Function(BuildContext) page, {
-  required RouteSettings settings,
-}) {
-  return PageRouteBuilder(
-    settings: settings,
-    transitionsBuilder: (_, animation, __, child) => FadeTransition(
-      opacity: animation,
-      child: child,
-    ),
-    pageBuilder: (context, _, __) => page(context),
-  );
-}
+part 'router.main.dart';

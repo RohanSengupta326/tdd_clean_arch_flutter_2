@@ -43,8 +43,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           listener: (context, state) {
             if (state is OnBoardingStatus && !state.isFirstTimer) {
               Navigator.pushReplacementNamed(context, '/home');
+              //   actually this condition is already handled in route : '/'
+              // so we could've just called Navigator.pushReplacementNamed(context, '/');
+              // only without conditions.
+              //   but in their we are checking using sharedPreferences that
+              //   user is firstTimer or not.
+              //   but if sharedPreferences fails the condition will be checked
+              //   here in these if else statements.
+
+              //
             } else if (state is UserCached) {
-              // TODO(User-Cached-Handler): Push to the appropriate screen
+              Navigator.pushReplacementNamed(context, '/');
             }
           },
           builder: (context, state) {
