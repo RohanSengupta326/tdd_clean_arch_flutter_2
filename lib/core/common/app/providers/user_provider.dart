@@ -6,7 +6,8 @@ class UserProvider extends ChangeNotifier {
 
   LocalUserModel? get user => _user;
 
-  // when app starts we save userModel if user is already loggedIn through initUser.
+  // when app starts we save userModel if user is already loggedIn through
+  // initUser.
   void initUser(LocalUserModel? user) {
     if (_user != user) _user = user;
   }

@@ -42,6 +42,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             // is saved, then we have to take it from firebase and store locally
             // and show
             // it again, so for that we are using provider.
+
+            // but also we are locally storing user data but not all the data is
+            // being store properly like this here. like points : 0 ,and bio is
+            // non existent ..so we have to actually properly fetch the data and
+            // store locally in a model.
+            // that we are doing after taking user to dashboard.
+            // theres a dashboardController class.
             final localUser = LocalUserModel(
               uid: user.uid,
               email: user.email ?? '',

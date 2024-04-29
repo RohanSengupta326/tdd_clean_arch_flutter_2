@@ -4,7 +4,9 @@ import 'package:clean_arch_bloc_2/core/res/fonts.dart';
 import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
 import 'package:clean_arch_bloc_2/core/services/router.dart';
 import 'package:clean_arch_bloc_2/firebase_options.dart';
+import 'package:clean_arch_bloc_2/src/dashboard/providers/dashboard_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +26,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseUIAuth.configureProviders([EmailAuthProvider()]); // for forgotten
+  // password firebase provided UI is used. for tha this is needed.
+  await init();
   await init();
   runApp(const MyApp());
 }
@@ -33,8 +38,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardController()),
+      ],
       child: MaterialApp(
         title: 'Education App',
         theme: ThemeData(
@@ -44,7 +52,8 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             color: Colors.transparent,
           ),
-          colorScheme: ColorScheme.fromSwatch(accentColor: Colours.primaryColour),
+          colorScheme:
+              ColorScheme.fromSwatch(accentColor: Colours.primaryColour),
         ),
         onGenerateRoute: generateRoute,
       ),

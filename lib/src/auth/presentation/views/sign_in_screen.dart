@@ -44,6 +44,11 @@ class _SignInScreenState extends State<SignInScreen> {
             CoreUtils.showSnackBar(context, state.message);
           } else if (state is SignedIn) {
             context.read<UserProvider>().initUser(state.user as LocalUserModel);
+            // after use signs in we get the user data from the state, we are
+            // storing their userData locally in  model, and using provider to
+            // call save data function.
+            //
+            //
             Navigator.pushReplacementNamed(context, Dashboard.routeName);
           }
         },

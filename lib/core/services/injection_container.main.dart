@@ -10,6 +10,12 @@ Future<void> init() async {
   await _initAuth();
 }
 
+// this is the main part where the connection between layers is established
+// but it is loosely coupled, because we are just sending the dependencies,
+// not directly returning types from a method which belongs to a different
+// layer.
+// like we don't return a type defined in data layer, in the domain layer.
+
 Future<void> _initAuth() async {
   sl
     ..registerFactory(

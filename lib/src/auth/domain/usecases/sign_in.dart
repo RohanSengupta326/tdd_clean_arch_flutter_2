@@ -16,6 +16,12 @@ class SignIn extends UsecaseWithParams<LocalUser, SignInParams> {
       );
 }
 
+
+//  we make different classes to take parameters in the method of the
+// usecases because assume if multiple parameters are there
+// then we will have to create a list of unlimited params.
+// which is not optimal , rather than we are creating a compact package of
+// params in a different class, like we create a model/entity.
 class SignInParams extends Equatable {
   const SignInParams({
     required this.email,
