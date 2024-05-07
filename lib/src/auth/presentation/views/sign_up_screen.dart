@@ -47,13 +47,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthError) {
             CoreUtils.showSnackBar(context, state.message);
           } else if (state is SignedUp) {
+            // if user is signedUp automatically signIn user.
+            // so call the signIn even too below.
             context.read<AuthBloc>().add(
-              SignInEvent(
-                email: emailController.text.trim(),
-                password: passwordController.text.trim(),
-              ),
-            );
+                  SignInEvent(
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                  ),
+                );
           } else if (state is SignedIn) {
+            // save user data locally and redirect to dashboard.
             context.read<UserProvider>().initUser(state.user as LocalUserModel);
             Navigator.pushReplacementNamed(context, Dashboard.routeName);
           }
@@ -112,12 +115,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           FirebaseAuth.instance.currentUser?.reload();
                           if (formKey.currentState!.validate()) {
                             context.read<AuthBloc>().add(
-                              SignUpEvent(
-                                email: emailController.text.trim(),
-                                password: passwordController.text.trim(),
-                                name: fullNameController.text.trim(),
-                              ),
-                            );
+                                  SignUpEvent(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                    name: fullNameController.text.trim(),
+                                  ),
+                                );
                           }
                         },
                       ),

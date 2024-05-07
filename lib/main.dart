@@ -4,14 +4,15 @@ import 'package:clean_arch_bloc_2/core/res/fonts.dart';
 import 'package:clean_arch_bloc_2/core/services/injection_container.dart';
 import 'package:clean_arch_bloc_2/core/services/router.dart';
 import 'package:clean_arch_bloc_2/firebase_options.dart';
-import 'package:clean_arch_bloc_2/src/dashboard/providers/dashboard_controller.dart';
+import 'package:clean_arch_bloc_2/src/dashboard/presentation/providers/dashboard_controller.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// analysiss_options.yaml is providing one of the most important rules to follow
+// analysis_options.yaml is providing one of the most important rules to follow
 // for clean code by 'very good ventures' package.
 // they simply combine the most important rules for clean code, else we could
 //customise the rules we want, with linter package.
@@ -28,7 +29,6 @@ Future<void> main() async {
   );
   FirebaseUIAuth.configureProviders([EmailAuthProvider()]); // for forgotten
   // password firebase provided UI is used. for tha this is needed.
-  await init();
   await init();
   runApp(const MyApp());
 }

@@ -45,7 +45,8 @@ class _SignInScreenState extends State<SignInScreen> {
           } else if (state is SignedIn) {
             context.read<UserProvider>().initUser(state.user as LocalUserModel);
             // after use signs in we get the user data from the state, we are
-            // storing their userData locally in  model, and using provider to
+            // storing their userData locally in a provider class, and
+            // using provider to
             // call save data function.
             //
             //

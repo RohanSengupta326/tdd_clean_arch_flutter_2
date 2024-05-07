@@ -15,8 +15,8 @@ class DashboardUtils {
   // user is signed in or not, then we are storing details in
   // router file, but there we are not able to get the full data.
   // There we are fetching little details. More user details might
-  // be save din firestore but we are not fetching those there.
-  // thats why we are fetching it here properly.
+  // be saved in firestore but we are not fetching those there.
+  // that's why we are fetching it here properly.
 
   static Stream<LocalUserModel> get userDataStream => sl<FirebaseFirestore>()
       .collection('users')

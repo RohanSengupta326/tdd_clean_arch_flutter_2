@@ -1,8 +1,9 @@
 import 'package:clean_arch_bloc_2/core/common/app/providers/user_provider.dart';
 import 'package:clean_arch_bloc_2/core/res/colours.dart';
 import 'package:clean_arch_bloc_2/src/auth/data/models/user_model.dart';
-import 'package:clean_arch_bloc_2/src/dashboard/providers/dashboard_controller.dart';
-import 'package:clean_arch_bloc_2/src/dashboard/utils/dashboard_utils.dart';
+import 'package:clean_arch_bloc_2/src/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:clean_arch_bloc_2/src/dashboard/presentation/utils/dashboard_utils.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
@@ -10,8 +11,8 @@ import 'package:provider/provider.dart';
 
 // Because for dashboard we don't have to talk to a server
 // or do any api call no backend is required, only we are
-// shwoing and playing iwth already fetched data.
-// so thats why only UI is present for dashboard.
+// showing and playing with already fetched data.
+// so that's why only UI is present for dashboard.
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -52,6 +53,9 @@ class _DashboardState extends State<Dashboard> {
             return Scaffold(
               body: IndexedStack(
                 index: controller.currentIndex,
+
+                // here the screens from dashboardController are linked
+                // with this screen.
                 children: controller.screens,
               ),
               bottomNavigationBar: BottomNavigationBar(
