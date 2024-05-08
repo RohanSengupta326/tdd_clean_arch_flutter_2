@@ -58,6 +58,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
           } else if (state is SignedIn) {
             // save user data locally and redirect to dashboard.
             context.read<UserProvider>().initUser(state.user as LocalUserModel);
+
+            // we are storing this data locally in a provider controller class
+            // because see here on this page we receive the state with userData.
+            // but on other pages if we have to use this userData how can we ?
+            // we have keep sending this data as constructors, so that's why we
+            // are saving this data locally using provider and even if data
+            // changes occur, we can update the locally stored data, and using
+            // provider we can change others screens too, which aren't connected
+            // with the Bloc.
+            // example: signIn screen receives state with User data.
+            // but on profile screen we also show userData, so we store it
+            // locally on provider class so that we can call provider on profile
+            // page and how the data, and also if user data updates,
+            // profile page is not connected with this bloc here, but still
+            // we would update the providers local data, and then reflect that
+            // change on the profile screen as that is connected with Provider.
+
             Navigator.pushReplacementNamed(context, Dashboard.routeName);
           }
         },

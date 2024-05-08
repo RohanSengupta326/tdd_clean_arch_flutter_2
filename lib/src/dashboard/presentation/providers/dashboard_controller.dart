@@ -1,4 +1,5 @@
 import 'package:clean_arch_bloc_2/core/common/app/providers/tab_navigator.dart';
+import 'package:clean_arch_bloc_2/core/common/app/providers/user_provider.dart';
 import 'package:clean_arch_bloc_2/core/common/views/persistent_view.dart';
 import 'package:clean_arch_bloc_2/src/profile/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';

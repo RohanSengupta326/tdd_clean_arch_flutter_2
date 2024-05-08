@@ -47,6 +47,11 @@ class _DashboardState extends State<Dashboard> {
           context.read<UserProvider>().user = snapshot.data;
           //   calling the setter, this is passing arguments even though we are
           //   using '='.
+          //   and in the router.main we are calling initUser() with limited
+          //   attributes of the user, can't access all.
+          //   so here we are getting all info from stream by calling
+          //   and then we are calling the ' setter ' and updating locally
+          //   stored userData.
         }
         return Consumer<DashboardController>(
           builder: (_, controller, __) {

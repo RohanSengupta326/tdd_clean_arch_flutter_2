@@ -10,6 +10,21 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // see as mentioned on the signUp screen we are storing
+    // userData locally using provider controller, cause we
+    // are using that userData here in the profile screen,
+    // so we can directly call the provider controller's
+    // getter to get the userData, and if some changes occur
+    // in userData, we will update the userData locally too,
+    // so as this page is connected with that, this page will be
+    // updated too even though not connected with bloc so bloc's changes
+    // won't reflect here. that's where provider comes in handy.
+
+    // so if using bloc for fetching data, and using that data elsewhere,
+    // then we are using provider to store that data locally to reflect that
+    // change in a different screen to which is connected to provider but not
+    // with bloc.
+
     return Consumer<UserProvider>(
       builder: (_, provider, __) {
         final user = provider.user;
