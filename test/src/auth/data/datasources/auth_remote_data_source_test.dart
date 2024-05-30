@@ -222,8 +222,17 @@ void main() {
           ),
         ).thenAnswer((_) async => Future.value());
 
-        // even though its a Future<void> function, we can't expect void cause
-        // else we can't check 'completes' in expect(). if used await.
+        // if returns Future<void> then we are doing:
+        // expect(directCall, completes)
+        // so if we use completes , we can't use await : await dataSource.for..
+        // no need to wrap with anonymous method : expect(() => call)
+
+        // if Future<void> but expecting throwsA,
+        // then wrap with anonymous method without await.
+
+        // if it returns something and asynchronous, then normal
+        // final res = await call();
+        // expect(res, equals())
         final call = dataSource.forgotPassword(tEmail);
 
         expect(call, completes);
@@ -245,6 +254,11 @@ void main() {
 
         final call = dataSource.forgotPassword;
 
+        // when [expecting throw error], we won't call the func
+        // in the previous step,also we can't use await,
+        // rather we would wrap it with
+        // another anonymous function in this next line, which will
+        // call that function.
         expect(() => call(tEmail), throwsA(isA<ServerException>()));
 
         verify(() => authClient.sendPasswordResetEmail(email: tEmail))
@@ -438,7 +452,7 @@ void main() {
         );
 
         // We are not calling 'expect()' here because we checked already
-        // updateDisplayName and updatePhotoURL previously signUp.
+        // updateDisplayName and updatePhotoURL previously in signUp.
 
         verify(() => mockUser.updateDisplayName(tFullName)).called(1);
 

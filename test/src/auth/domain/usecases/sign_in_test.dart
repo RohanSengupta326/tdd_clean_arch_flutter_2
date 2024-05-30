@@ -25,7 +25,7 @@ void main() {
     'should return [LocalUser] from the [AuthRepo]',
     () async {
       when(
-        () => repo.signIn(
+            () => repo.signIn(
           email: any(named: 'email'),
           password: any(named: 'password'),
         ),

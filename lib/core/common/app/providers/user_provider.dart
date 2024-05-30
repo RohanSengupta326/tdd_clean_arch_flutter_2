@@ -18,7 +18,8 @@ class UserProvider extends ChangeNotifier {
     if (_user != user) {
       _user = user;
       Future.delayed(Duration.zero, notifyListeners);
-      //   so that when widget tree is getting built , in between if user changes
+      //   so that when widget tree is getting built , in between if user
+      //   changes
       //   occurs then notifyListeners() won't work. so that's why we are giving
       //   it some time to build the widget tree properly, then calling
       //   notifylisteners even if the user changes occurred midway.
