@@ -28,6 +28,13 @@ class DashboardController extends ChangeNotifier {
       create: (_) => TabNavigator(TabItem(child: const Placeholder())),
       child: const PersistentView(),
     ),
+
+    // sending ProfileView to TabNavigator to add this to the currentPageStack
+    // of the custom navigator.
+    // then we are showing that page in the PersistentView itself by calling it.
+    // so inside PersistentView which actually contains the ProfileView
+    // from there we can also call TabNavigators Provider functions cause
+    // inside create : , we instantiated the TabNavigator object.
     ChangeNotifierProvider(
       create: (_) => TabNavigator(TabItem(child: const ProfileView())),
       child: const PersistentView(),

@@ -56,6 +56,12 @@ class _DashboardState extends State<Dashboard> {
         return Consumer<DashboardController>(
           builder: (_, controller, __) {
             return Scaffold(
+              // IndexedStack takes a list of screens & shows the screen
+              // according to the index argument it has which stored the
+              // current index.
+              // now to navigate between indexes we use BottonNavigatonBar
+              // to call methods to change indexes and stuff, can do
+              // with other methods too.
               body: IndexedStack(
                 index: controller.currentIndex,
 

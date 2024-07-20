@@ -51,6 +51,10 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
               // why we are not defining this route in the generatedRoute
               // file and wrapping with BlocProvider there, why we are doing
               // it here ?
+              // solution : cause in generatedRoute we provide routeNames
+              // but in custom tabNavigator we don't have an option to take
+              // that so we have provide the widget instance, so that's why we
+              // are doing that here.
               onTap: () => context.push(
                 BlocProvider(
                   create: (_) => sl<AuthBloc>(),
